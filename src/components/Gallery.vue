@@ -3,7 +3,7 @@
 
   <div class="gallery">
     <div v-for="(imageUrl, index) in splitFiles" :key="index" class="gallery-item">
-      <img :src="'http://localhost:8080/out/' + imageUrl" :alt="'Image ' + index">
+      <img :src="'${this.serverUrl}/out/' + imageUrl" :alt="'Image ' + index">
     </div>
   </div>
 
@@ -17,7 +17,12 @@ export default {
       selectedFile: null,
       uploadedFileUuid: null,
       splitFiles: null,
+      backendUrl: null
     };
+  },
+  created() {
+    // Access the SERVER_URL from the global window object
+    this.backendUrl = window.env.BACKEND_URL;
   },
   methods: {
     handleFileChange(event) {
@@ -26,7 +31,7 @@ export default {
     async splitVideo() {
       if (this.uploadedFileUuid) {
         try {
-          const response = await fetch(`http://localhost:8080/pics/${this.uploadedFileUuid}`, {
+          const response = await fetch(`${this.backendUrl}/pics/${this.uploadedFileUuid}`, {
             method: 'POST',
           });
 
@@ -48,7 +53,7 @@ export default {
         formData.append("file", this.selectedFile);
 
         try {
-          const response = await fetch('http://localhost:8080/upload', {
+          const response = await fetch('${this.serverUrl}/upload', {
             method: 'POST',
             body: formData, // formData je zde posílána jako tělo požadavku
             // Nezapomeňte, že při použití FormData, není nutné nastavovat Content-Type header, to udělá browser automaticky

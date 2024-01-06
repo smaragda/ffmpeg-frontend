@@ -10,13 +10,18 @@ export default {
   data() {
     return {
       splitFiles: null,
+      backendUrl: null
     };
+  },
+  created() {
+    // Access the SERVER_URL from the global window object
+    this.backendUrl = window.env.BACKEND_URL;
   },
   methods: {
     async splitVideo() {
       if (this.uploadedFileUuid) {
         try {
-          const response = await fetch(`http://localhost:8080/pics/${this.uploadedFileUuid}`, {
+          const response = await fetch(`${this.backendUrl}/pics/${this.uploadedFileUuid}`, {
             method: 'POST',
           });
 
