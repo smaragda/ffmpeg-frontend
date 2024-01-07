@@ -3,7 +3,7 @@
 
   <div class="gallery">
     <div v-for="(imageUrl, index) in splitFiles" :key="index" class="gallery-item">
-      <img :src="'${this.serverUrl}/out/' + imageUrl" :alt="'Image ' + index">
+      <img :src="'${this.backendUrl}/out/' + imageUrl" :alt="'Image ' + index">
     </div>
   </div>
 

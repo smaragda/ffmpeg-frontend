@@ -1,6 +1,5 @@
 <template>
   <div class="video-uploader">
-    <!-- <input type="file" @change="handleFileChange" ref="fileInput" /> -->
 
     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" @change="handleFileChange" ref="fileInput">
@@ -12,7 +11,7 @@
 
   <div class="gallery">
     <div v-for="(imageUrl, index) in splitFiles" :key="index" class="gallery-item">
-      <img :src="'http://localhost:8080/out/' + imageUrl" :alt="'Image ' + index">
+      <img :src="`${this.backendUrl}/out/` + imageUrl" :alt="'Image ' + index">
     </div>
   </div>
 
@@ -25,7 +24,12 @@ export default {
       selectedFile: null,
       uploadedFileUuid: null,
       splitFiles: null,
+      backendUrl: null
     };
+  },
+  created() {
+    // Access the SERVER_URL from the global window object
+    this.backendUrl = window.env.BACKEND_URL;
   },
   methods: {
     handleFileChange(event) {
@@ -34,7 +38,7 @@ export default {
     async splitVideo() {
       if (this.uploadedFileUuid) {
         try {
-          const response = await fetch(`http://localhost:8080/pics/${this.uploadedFileUuid}`, {
+          const response = await fetch(`${this.backendUrl}/pics/${this.uploadedFileUuid}`, {
             method: 'POST',
           });
 
@@ -56,7 +60,7 @@ export default {
         formData.append("file", this.selectedFile);
 
         try {
-          const response = await fetch('http://localhost:8080/upload', {
+          const response = await fetch('${this.backendUrl}/upload', {
             method: 'POST',
             body: formData, // formData je zde posílána jako tělo požadavku
             // Nezapomeňte, že při použití FormData, není nutné nastavovat Content-Type header, to udělá browser automaticky
