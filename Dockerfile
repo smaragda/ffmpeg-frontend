@@ -1,5 +1,5 @@
 # Stage 1: Build the Vue.js application
-FROM node:14 AS build
+FROM node:latest AS build
 
 # Set the working directory in the Docker image
 WORKDIR /app
