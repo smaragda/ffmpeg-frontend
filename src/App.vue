@@ -1,18 +1,22 @@
 <script setup>
-import UploadPage from "@/views/UploadPage.vue";
+import UploadAndSplit from './components/UploadAndSplit.vue'
 </script>
 
 <template>
-  <main>
-    <UploadPage/>
-  </main>
-
+  <UploadAndSplit msg="Video exploder" />
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
 }
-
-
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
 </style>
